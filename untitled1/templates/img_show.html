@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% for degisken in instagram_data %}
+<img src={{ degisken["img"] }} height="160" width="160" >
+   <form action={{ url_for('download') }} method="POST" >
+    <input type="submit"  name="indir" value={{ degisken["img"] }}/>
+</form>
+{% endfor %}
+<body>
+
+</body>
+</html>
