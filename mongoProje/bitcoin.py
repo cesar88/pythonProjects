@@ -23,25 +23,22 @@ for key in data:
                      })
 
 df = pandas.DataFrame(fix_json)
-
 df["t+1"] = df["value"].shift(1)
 df.fillna(0, inplace=True)
 df["diff"] = (df["value"]-df["t+1"])/df["t+1"]
 
 df["kadir_way"] = list(df.value.pct_change())
-z = df[df.day == "Monday"]
-print(z.kadir_way.describe())
-exit()
-
 
 days = list(set(df.day))
 
+create_db=[]
 for i in days:
-    print(i)
-    z = df[df.day == i]
-    print(z.value.describe()["mean"])
+    z=df[df.day==i]
+    create_db.append({"day":i,
+                      "std":z.kadir_way.describe()["std"]})
 
-exit()
+newdf=pandas.DataFrame(create_db)
+print(newdf)
 ax = plt.gca()
 df.plot(kind='line',
         x='date',
