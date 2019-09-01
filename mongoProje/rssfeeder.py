@@ -1,5 +1,5 @@
 import xmltodict,requests,pymongo
-from pprint import pprint
+
 
 connection=pymongo.MongoClient("mongodb://167.71.72.44:27017")
 db=connection["bilgeadam"]
@@ -14,5 +14,4 @@ for data in jsonData["rss"]["channel"]["item"]:
     print(data["title"])
     print(data["link"])
     table.insert_one({"Title":data["title"],"Link":data["link"]})
-# pprint(jsonData["rss"]["channel"]["item"])
 
