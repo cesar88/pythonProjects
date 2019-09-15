@@ -28,7 +28,6 @@ df.fillna(0, inplace=True)
 df["diff"] = (df["value"]-df["t+1"])/df["t+1"]
 
 df["kadir_way"] = list(df.value.pct_change())
-
 days = list(set(df.day))
 
 create_db=[]
@@ -38,7 +37,18 @@ for i in days:
                       "std":z.kadir_way.describe()["std"]})
 
 newdf=pandas.DataFrame(create_db)
-print(newdf)
+# print(newdf)gün bazlı standart sapma
+z=pandas.date_range(start='2013-01-01',end='2019-01-01',freq='M')
+date_df=pandas.DataFrame({"start_date":z})
+date_df["end_date"]=date_df.shift(-1)#son tarih baş tarihin yanında olsun diye alt alta gelmesin herşey diye
+
+s={str(date_df.iloc[14])["start_date"]}
+e={str(date_df.iloc[14])["end_date"]}
+
+
+
+print(date_df)
+
 ax = plt.gca()
 df.plot(kind='line',
         x='date',
